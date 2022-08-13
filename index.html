@@ -89,13 +89,22 @@
             .connect {
                 margin-top: 40px;
                 list-style-type: none;
-
+                font-family: Roboto, sans-serif;
             }
             .connect button{
+                
                 border: transparent;
                 border-radius: 5px;
                 padding:10px;
 
+                transition: background 500ms ease-in-out, 
+                transform 250ms ease;
+
+            }
+
+            .connect button:hover{
+                background-color: rgba(201, 198, 198, 0.842);
+                cursor: pointer;
             }
             .connect ul{
                 display:inline-block;
@@ -105,15 +114,18 @@
             /* mouse over link */
             #linkedin:hover{
                 color: blue;
-                background-color: rgba(196,196,196,0.4);
-                cursor: pointer;
+                
                 /*rgb(179, 255, 0)*/
             }
 
             #mail:hover{
                 color: rgba(255, 19, 19, 0.986);
-                background-color: rgba(196,196,196,0.4);
-                cursor: pointer;
+                
+            }
+
+            #github:hover{
+                color: rgba(0,0,0, 0.986);
+                
             }
 
 
@@ -146,7 +158,6 @@
 
             }
             .About{
-                
                 text-align: center;
                 padding: 10px;
                 color: white;
@@ -155,9 +166,20 @@
                 border-radius: 20px 20px 20px 0;
                 grid-area: About;
                 z-index: 2;
+
+                animation: slidedown 4s forwards;
             }
+            @keyframes slidedown{
+                0%{
+                    height: 0%;
+                }
+                100%{
+                    height: 100%;
+                }
+            }
+
             .About h2{
-                margin-top: 0px;
+                margin-top: 15px;
                 margin-bottom: 5px;
                 font-family: Roboto;
                 color: white;
@@ -227,13 +249,23 @@
             }
             .Skills .percent div
             {
+                --t:var(--v);
                 position: absolute;
                 list-style: none;
                 top: 0;
                 left: 0;
                 height: 100%;
                 background: rgb(255, 55, 132);
+                animation: slideright 3s forwards;
 
+            }
+            @keyframes slideright{
+                0%{
+                    width:0%;
+                }
+                100%{
+                    width:calc(var(--t));
+                }
             }
 
             .Education {
@@ -296,14 +328,31 @@
             .main-nav button{
                 font-family: 'Roboto';
                 font-weight: 900;
-                font-size: 15px;
-                border: transparent;
+                letter-spacing: 1px;
+                font-size: calc(10px + 1vh);
+
+                border: snow;
+                
+                background: rgb(12,12,12);
+                color:snow;
                 border-radius: 10px;
                 padding:10px;
                 cursor: pointer;
+
+                transition: background 500ms ease-in-out, 
+                transform 250ms ease;
+
             }
             .main-nav button:hover{
-                background-color: greenyellow;
+                background-color: snow;
+                color:black;
+            }
+            
+            .main-nav button:active:focus
+            {
+                text-decoration: underline;
+                text-underline-offset: 3px;
+                text-decoration-thickness: 3px;
             }
 
             .nav-container{
@@ -311,35 +360,61 @@
             }
 
             .fadeout{
-                display: none;
+                display:none;
+                animation: showMe 1s forwards;
+
+            }
+            @keyframes showMe{
+                0%{
+                    opacity: 0;
+                }
+                100%{
+                    opacity:1;
+                }
             }
 
             .navbar{
+                
                 background-color: rgb(12, 12, 12);
                 padding:2px;
                 border-radius: 10px;
                 margin-bottom: 10px;
                 box-shadow: 0px 0px 50px -25px;
+
             }
 
         </style>
         <script>
-            function contact(a){
+            function links(a){
                 switch(a){
+                    default: window.alert("Error");
                     case 1: window.open('https://www.linkedin.com/in/vishal-saini-nxt/", "_blank');
                     break;
                     case 2: window.open('mailto:vishalsaini0911@gmail.com',"_blank");
                     break;
-                    default: window.alert("Error");
+                    case 3:window.open('https://www.github.com/vishalsaini-git',"_blank");
+                    break;
                 }
                 
             }
             function fadecontainers(contid){
                 var navcontainers = document.getElementsByClassName("fadeout");
+                document.addEventListener('click', (e) => {
+                    let element = e.target;
+                    if(element.tagName == "BUTTON"){        
+                        
+                    }
+                });
+
+
                 for(container of navcontainers){
                     if(container === contid){
                         if(container.style.display === 'block'){
                             container.style.display = 'none';
+                                $('btn').on('click', function(){
+                                $('button').removeClass('selected');
+                                $(this).addClass('selected');
+                            });
                         }
                         else{
                             container.style.display = 'block';
@@ -360,8 +435,9 @@
                 <h1 id="name">I'm Vishal</h1>
                 <h3 id="designation">Learn. Practice. Spread</h3>
                 <ul class="connect">
-                    <button id="linkedin" onclick = contact(1)>vishal-saini-nxt@ <i class="fa-brands fa-linkedin fa-lg"></i></button>
-                    <button id="mail" onclick= contact(2)><i  class="fa-brands fa-google fa-sm"></i> mail</a></li>
+                    <button id="linkedin" onclick = links(1)><i class="fa-brands fa-linkedin fa-lg"></i> LinkedIn</button>
+                    <button id="mail" onclick= links(2)><i  class="fa-brands fa-google fa-sm"></i> mail</button>
+                    <button id="github" onclick= links(3)><i class="fa-brands fa-github fa-lg"></i> Github</button>
                 </ul> 
             </section>
             <figure class="video">
@@ -390,37 +466,37 @@
                         <li>
                             <span class="text">Machine Learning</span>
                             <span class="percent">
-                            <div style="width: 35%;"></div>
+                            <div style="--v: 35%;"></div>
                         </span>
                         </li>
                         <li>
                             <span class="text">Adobe Tools</span>
                             <span class="percent">
-                            <div style="width: 60%;"></div>
+                            <div style="--v: 60%;"></div>
                         </span>
                         </li>
                         <li>
                             <span class="text">Blender 3D</span>
                             <span class="percent">
-                            <div style="width: 75%;"></div>
+                            <div style="--v: 75%;"></div>
                         </span>
                         </li>
                         <li>
                             <span class="text">Material UI</span>
                             <span class="percent">
-                            <div style="width: 90%;"></div>
+                            <div style="--v: 90%;"></div>
                         </span>
                         </li>
                         <li>
                             <span class="text">Python</span>
                             <span class="percent">
-                            <div style="width: 80%;"></div>
+                            <div style="--v: 80%;"></div>
                         </span>
                         </li>
                         <li>
                             <span class="text">AR/VR dev</span>
                             <span class="percent">
-                            <div style="width: 40%;"></div>
+                            <div style="--v: 40%;"></div>
                         </span>
                         </li>
                         </ul>
@@ -428,11 +504,12 @@
                 </section>
                 
                 <section class="Education">
-                    <nav class="navbar">
+                    <nav class="navbar" style="--td:1.2s">
+                        <div class="block-reveal" style="--bc: #4040bf; --d: .5s"></div>
                         <ul class="main-nav">
-                            <li><button onclick="fadecontainers(education)">Education</button></li>
-                            <li><button onclick="fadecontainers(projects)">Projects</button></li>
-                            <li><button onclick="">Our Team</button></li>
+                            <li><button class="nav-btn" id="edubtn" onclick="fadecontainers(education)">Education</button></li>
+                            <li><button class="nav-btn" id="pjtbtn" onclick="fadecontainers(projects)">Projects</button></li>
+                            <li><button class="nav-btn" id="contbtn" onclick="fadecontainers(contact)">Contact</button></li>
                     </nav>
 
                     <div class="nav_container">
@@ -443,8 +520,9 @@
                                 <li>
                                   <span>
                                   <h3>Delhi University</h3>
-                                  <h4 style="margin-top: -10px;">2020 - 2023</h4>
-                                  <h5>BSc (Hons) Computer Science</h5>
+                                  <h4 style="margin-top: -14px;">Sri Guru Gobind Singh College of Commerce</h4>
+                                  <h4 style="margin-top: -8px;">2020 - 2023</h4>
+                                  <h5 style="background-color:#000; width:fit-content; color:snow; border-radius:3px; padding:5px; letter-spacing: 2px;"> BSc (Hons) Computer Science </h5>
                                   </span>
                                 </li>
                               </ul>
@@ -476,6 +554,23 @@
                                     </span>
                                   </li>
                               </ul>
+                        </fieldset>
+                        <fieldset class="fadeout" id="contact">
+                            <legend class="legend"><i class="fa-solid fa-user"></i> Contact</legend>
+                            <ul>
+                                <li>
+                                    <span>
+                                        <h3>Address</h3>
+                                        <h4 style="margin-top: -10px;">Old Housing Board Colony, Sonipat - 131001, Haryana, India</h4>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span>
+                                        <h3>Connect</h3>
+                                        <h4 style="margin-top: -10px">+91 XXXXXXXXXX</h4>
+                                    </span>
+                                </li>
+                            </ul>
                         </fieldset>
                     </div>
                 </section>
